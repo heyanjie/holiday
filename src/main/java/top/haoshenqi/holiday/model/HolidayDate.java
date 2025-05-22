@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HolidayDate {
+    private Integer id;
     /**
      * 主键
      * 日期yyyy-MM-dd

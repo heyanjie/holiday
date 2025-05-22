@@ -3,55 +3,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.haoshenqi.holiday.dao.mybatis.HolidayDateMapper">
 
-    <insert id="insertHolidayDate" parameterType="top.haoshenqi.holiday.model.HolidayDate">
-        (
-        <trim suffixOverrides=",">
-            <if test="date!=null">
-                `date`,
-            </if>
-            <if test="year!=null">
-                `year`,
-            </if>
-            <if test="month!=null">
-                `month`,
-            </if>
-            <if test="day!=null">
-                `day`,
-            </if>
-            <if test="status!=null">
-                `status`,
-            </if>
-        </trim>
-        )
-        VALUES
-        (
-        <trim suffixOverrides=",">
-            <if test="date!=null">
-                #{date},
-            </if>
-            <if test="year!=null">
-                #{year},
-            </if>
-            <if test="month!=null">
-                #{month},
-            </if>
-            <if test="day!=null">
-                #{day},
-            </if>
-            <if test="status!=null">
-                #{status},
-            </if>
-        </trim>
-        )
-    </insert>
-
 
     <insert id="batchInsertHolidayDate"  parameterType="java.util.List" >
         INSERT INTO `holiday_date`
-        ( `date`,`year`,`month`,`day`,`status` )
+        ( `id`,`date`,`year`,`month`,`day`,`status` )
         VALUES
         <foreach collection="list" item="item" index="index"   separator=",">
-            ( #{item.date} ,#{item.year},#{item.month},#{item.day}, #{item.status})
+            ( #{item.id} ,#{item.date} ,#{item.year},#{item.month},#{item.day}, #{item.status})
         </foreach>
         ON DUPLICATE KEY UPDATE
         `status` = values(status)
@@ -172,6 +130,7 @@
 
 
     <resultMap type="top.haoshenqi.holiday.model.HolidayDate" id="HolidayDateMap">
+        <result property="id" column="id"/>
         <result property="date" column="date"/>
         <result property="year" column="year"/>
         <result property="month" column="month"/>
@@ -182,7 +141,7 @@
 
     <select id="queryHolidayDate" resultMap="HolidayDateMap">
         select
-        <include refid="baseResult"></include>
+        *
         from  `holiday_date`
         <trim prefix="where" suffixOverrides="and | or">
             <if test="date != null and date!=''">
@@ -205,7 +164,7 @@
 
     <select id="queryHolidayDateLimit1" resultMap="HolidayDateMap">
         select
-        <include refid="baseResult"></include>
+        *
         from  `holiday_date`
         <trim prefix="where" suffixOverrides="and | or">
             <if test="date != null and date!=''">
@@ -227,23 +186,6 @@
         </trim>
         limit 1
     </select>
-
-
-    <sql id="allResult">
-        <trim suffixOverrides=",">
-            `date`,
-            `year`,
-            `month`,
-            `day`,
-            `status`,
-        </trim>
-    </sql>
-
-
-
-    <sql id="baseResult">
-                <include refid="allResult"></include>
-    </sql>
 
 
 

@@ -11,13 +11,6 @@ import java.util.List;
  */
 @Mapper
 public interface HolidayDateMapper {
-    /**
-     * Insert holiday date int.
-     *
-     * @param object the object
-     * @return the int
-     */
-    int insertHolidayDate(HolidayDate object);
 
     /**
      * Batch insert holiday date int.
